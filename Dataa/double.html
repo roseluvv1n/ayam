@@ -1,0 +1,33 @@
+<?php
+ echo "Nama Lengkap = " . $_POST['nama'] . "<br>";
+ echo "Jenis Kelamin = " . $_POST['jenis'] . "<br>";
+ echo "Agama = " . $_POST['agama'] . "<br>";
+ echo "Hobi = ";
+ $hobi = "";
+ foreach ($_POST['hobi'] as $key => $value) {
+ echo $hobi . $value;
+ $hobi = ", ";
+ }
+ $dirOriginal = 'assets/original_image/';
+ $dirThumbnail = 'assets/thumbnail_image/';
+ $filename = date("YmdHis") . '.' . pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+ $temporary = $_FILES['file']['tmp_name'];
+ $fileSize = filesize($temporary)/1024/1024;
+ $src_image = imagecreatefromjpeg($temporary);
+ $src_width = imageSX($src_image);
+ $src_height = imageSY($src_image);
+ $width = 200;
+ $height = ($width / $src_width) * $src_height;
+ if (exif_imagetype($temporary) !== false && $fileSize < 1) {
+    move_uploaded_file($temporary, $dirOriginal . $filename);
+    $imagick = new Imagick($dirOriginal . $filename);
+    $imagick->resizeImage((int)$width, (int)$height, Imagick::FILTER_LANCZOS, 1, true);
+    $imagick->writeImage($dirThumbnail . $filename);
+    $imagick->clear();
+    $imagick->destroy();
+    } else { ?>
+    <script>
+    alert("Type data file salah atau ukuran file lebih 1Mb")
+    window.location = "index.php";
+ </script>
+ <?php } ?>

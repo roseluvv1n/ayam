@@ -1,0 +1,43 @@
+<?php
+    // Display the form data
+    echo "Nama Lengkap = " . $_POST['nama'] . "<br>";
+    echo "Jenis Kelamin = " . $_POST['jenis'] . "<br>";
+    echo "Agama = " . $_POST['agama'] . "<br>";
+
+    echo "Hobi = ";
+    $hobi = "";
+    foreach ($_POST['hobi'] as $key => $value) {
+        echo $hobi . $value;
+        $hobi = ", ";
+    }
+    echo "<br>";
+
+    // Handle file upload
+    $dirupload = "gambar/";
+    $namaFile = $_FILES['file']['name'];
+    $temporary = $_FILES['file']['tmp_name'];
+    $fileSize = $_FILES['file']['size'];
+    $fileExtension = pathinfo($namaFile, PATHINFO_EXTENSION);
+    $allowedTypes = ['jpeg', 'jpg', 'png'];
+    $maxFileSize = 1 * 1024 * 1024; // 1 MB in bytes
+
+    if (in_array(strtolower($fileExtension), $allowedTypes)) {
+        
+        }
+        if ($fileSize <= $maxFileSize) {
+
+    }
+    $newFileName = date("Y-m-d H.i.s") . '.' . $fileExtension;
+    $terupload = move_uploaded_file($temporary, $dirupload . $newFileName);
+?>
+<br>
+//tugas4 200px
+if(move_uploaded_file($temporary,$filepath))
+    if(copy($filepath,$dirupload2.filename)){
+        echo "file uploaded success.";
+    } else {
+        echo "Failed to copy file to the second directory."
+    }else {
+        echo "failed to upload file";
+    }
+    
